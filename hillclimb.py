@@ -1,6 +1,4 @@
 import random
-import numpy as np
-import matplotlib.pyplot as plt
 
 # input range bounds
 bounds1 = [-5.0, 5.0]
@@ -46,7 +44,7 @@ def hillclimbing(objective, bounds, step_size):
 
     return solution[0], solution_eval
 
-def random_restart_hillclimbing(objective, bounds, step_size, restarts):
+def random_restart(objective, bounds, step_size, restarts):
     best_solution = None
     best_solution_eval = float('-inf')  # Start with negative infinity for maximization
     all_best_solutions = []  # To store the best solution from each restart
@@ -75,7 +73,11 @@ def main():
   hillclimbing(obj_f, bounds1, 0.5)
   hillclimbing(obj_f, bounds1, 0.1)
   print("Random-Restart Algorithm Results")
-  random_restart_hillclimbing(obj_g, bounds2, 0.5, 20)
+  random_restart(obj_g, bounds2, 0.5, 20)
+
+  print("Comparison of g(x) between Hill-Climbing and Random-Restart")
+  hillclimbing(obj_g, bounds2, 0.5)
+  random_restart(obj_g, bounds2, 0.5, 20)
 
 
 if __name__ == "__main__":
