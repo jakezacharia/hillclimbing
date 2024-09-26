@@ -15,35 +15,32 @@ def obj_g(x):
 # hill climbing local search algorithm
 def hillclimbing(objective, bounds, iterations, step_size):
   # create initial starting point
-	solution = bounds[:, 0] + random(len(bounds)) * (bounds[:, 1] - bounds[:, 0])
-	# evaluate the initial point
-	solution_eval = objective(solution)
-	for i in range(iterations):
-		# step
-		candidate = solution + random(len(bounds)) * step_size
-		# evaluate candidate point w/ objective function f(x)
-		candidate_eval = obj_f(candidate)
-		# check if we should keep the new point
-		if candidate_eval <= solution_eval:
-			# store the new point
-			solution, solution_eval = candidate, candidate_eval
-			# report progress
-			print('>%d f(%s) = %.5f' % (i, solution, solution_eval))
-	return [solution, solution_eval]
-
-
-# ##
-# Test Case 1
-# ##
-
-hillclimbing(obj_f, bounds1, 1000, 0.5)
-
-
-
+  solution = [bounds[0] + random.random() * (bounds[1] - bounds[0])]
+  # evaluate the initial point
+  solution_eval = objective(solution[0])
+  for i in range(iterations):
+    # step
+    step_direction = random.choice([-1, 1])
+    candidate = [solution[0] + step_direction * random.random() * step_size]
+    # ensure the candidate is within bounds
+    candidate[0] = max(bounds[0], min(bounds[1], candidate[0]))
+    # evaluate candidate point w/ objective function f(x)
+    candidate_eval = objective(candidate[0])
+    # check if we should keep the new point
+    if candidate_eval >= solution_eval:
+      # store the new point
+      solution, solution_eval = candidate, candidate_eval
+      # report progress
+  print('>%d f(%s) = %.5f' % (i, solution, solution_eval))
+  return [solution, solution_eval]
 
 
 def main():
-  print("Hello, World!")
+  ## test cases
+  hillclimbing(obj_f, bounds1, 100, 0.5)
+  hillclimbing(obj_f, bounds1, 100, 0.1)
+
+
 
 if __name__ == "__main__":
   main()
