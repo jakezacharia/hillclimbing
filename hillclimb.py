@@ -11,7 +11,6 @@ def obj_f(x):
 def obj_g(x):
   return (0.0051 * (x**5)) - (0.1367 * (x**4)) + (1.24 * (x**3)) - (4.456 * (x**2)) + (5.66 * (x)) - (0.287)
 
-
 def hillclimbing(objective, bounds, step_size):
     # create initial randomized starting point
     solution = [bounds[0] + random.random() * (bounds[1] - bounds[0])]
@@ -39,9 +38,8 @@ def hillclimbing(objective, bounds, step_size):
                 solution, solution_eval = right_candidate, right_eval
         else:
             # if no improvement, stop (local maximum found)
-            print(f"|| Local Maximum Found: {solution[0]:.5f} || Objective Value: {solution_eval:.5f} || Bounds: {bounds} || Step Size: {step_size}")
+            print(f"Local Max: {solution[0]:.5f} | Obj Val: {solution_eval:.5f} | Bounds: {bounds} | Step: {step_size}")
             break
-
     return solution[0], solution_eval
 
 def random_restart(objective, bounds, step_size, restarts):
