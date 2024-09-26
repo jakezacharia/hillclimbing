@@ -17,49 +17,48 @@ def hillclimbing(objective, bounds, step_size):
     solution = [bounds[0] + random.random() * (bounds[1] - bounds[0])]
     solution_eval = objective(solution[0])
     while True:
-        # Check both directions
+        # check both directions
         left_candidate = [solution[0] - step_size]
         right_candidate = [solution[0] + step_size]
 
-        # Ensure candidates are within bounds
+        # ensure candidates are within bounds
         left_candidate[0] = max(bounds[0], min(bounds[1], left_candidate[0]))
         right_candidate[0] = max(bounds[0], min(bounds[1], right_candidate[0]))
 
-        # Evaluate candidate points with the objective function
+        # evaluate candidate points with the objective function
         left_eval = objective(left_candidate[0])
         right_eval = objective(right_candidate[0])
 
-        # Determine the best candidate
+        # determine the best candidate
         if left_eval > solution_eval or right_eval > solution_eval:
             if left_eval > right_eval:
-                # Move left if left is better
+                # move left if left is better
                 solution, solution_eval = left_candidate, left_eval
             else:
-                # Move right if right is better
+                # move right if right is better
                 solution, solution_eval = right_candidate, right_eval
         else:
-            # If no improvement, stop (local maximum found)
-            print(f"Local Maximum Found: {solution[0]:.5f}, Objective Value: {solution_eval:.5f} within bounds {bounds} using step size {step_size}")
+            # if no improvement, stop (local maximum found)
+            print(f"|| Local Maximum Found: {solution[0]:.5f} || Objective Value: {solution_eval:.5f} || Bounds: {bounds} || Step Size: {step_size}")
             break
 
     return solution[0], solution_eval
 
 def random_restart(objective, bounds, step_size, restarts):
     best_solution = None
-    best_solution_eval = float('-inf')  # Start with negative infinity for maximization
-    all_best_solutions = []  # To store the best solution from each restart
+    best_solution_eval = float('-inf')  # start with negative infinity for maximization
 
-    # Run hill climbing multiple times from different random starting points
+    # run hill climbing multiple times from different random starting points
     for i in range(restarts):
         print(f"=>Restart [{i + 1}/{restarts}]")
         solution, solution_eval = hillclimbing(objective, bounds, step_size)
 
-        # Keep track of the best solution found
+        # keep track of the best solution found
         if solution_eval > best_solution_eval:
             best_solution_eval = solution_eval
-            best_solution = solution  # This will be a float now
+            best_solution = solution  # this will be a float now
 
-    # Print the best overall solution found
+    # p›››rint the best overall solution found
     if best_solution is not None:
         print(f"Best Local Maximum: {best_solution:.5f}, Objective Value: {best_solution_eval:.5f}")
     else:
