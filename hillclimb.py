@@ -48,15 +48,15 @@ def random_restart(objective, bounds, step_size, restarts):
 
     # run hill climbing multiple times from different random starting points
     for i in range(restarts):
-        print(f"=>Restart [{i + 1}/{restarts}]")
+        # print(f"=>Restart [{i + 1}/{restarts}]")
         solution, solution_eval = hillclimbing(objective, bounds, step_size)
 
         # keep track of the best solution found
         if solution_eval > best_solution_eval:
             best_solution_eval = solution_eval
-            best_solution = solution  # this will be a float now
+            best_solution = solution  # converting to float
 
-    # p›››rint the best overall solution found
+    # print the best overall solution found
     if best_solution is not None:
         print(f"Best Local Maximum: {best_solution:.5f}, Objective Value: {best_solution_eval:.5f}")
     else:
@@ -66,15 +66,14 @@ def random_restart(objective, bounds, step_size, restarts):
 
 def main():
   # hill climbing
-  print("Hill-Climbing Algorithm Results")
+  print("Hill-Climbing f(x) Results")
   hillclimbing(obj_f, bounds1, 0.5)
   hillclimbing(obj_f, bounds1, 0.1)
   print("Random-Restart Algorithm Results")
   random_restart(obj_g, bounds2, 0.5, 20)
 
-  print("Comparison of g(x) between Hill-Climbing and Random-Restart")
+  print("Hill-climbing g(x) Results")
   hillclimbing(obj_g, bounds2, 0.5)
-  random_restart(obj_g, bounds2, 0.5, 20)
 
 
 if __name__ == "__main__":
